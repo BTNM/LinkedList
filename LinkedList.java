@@ -75,7 +75,12 @@ public boolean equals(Object o)
 
     @Override
     public IList<E> rest() {
+        if (firstNode == null || firstNode.getNextNode() == null )  {
+            throw new NoSuchElementException();
+        }
+
         Node nextNode = firstNode.getNextNode();
+        // SOME PROBLEMS REGARDING RETURN NODE AS ILIST
         return (IList<E>) nextNode;
     }
 
