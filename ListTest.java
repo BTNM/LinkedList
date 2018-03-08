@@ -279,8 +279,53 @@ class ListTest {
         assertEquals(8,mainList.size());
     }
 
+    @Test
+    void iteratorThroughSimpleList () {
+        setupMultipleElement();
+
+        // check if iterator works and takes out/iterate through each element
+        mainList.add(5);
+
+        LinkedList<Integer> testList = new LinkedList<>();
+        testList.put(5);
+        testList.put(4);
+        testList.put(3);
+        testList.put(2);
+        testList.put(1);
+
+        Iterator<Integer> listIterator = mainList.iterator();
+        while (listIterator.hasNext() ) {
+//            assertEquals(testList.remove(),listIterator.next().getData() );
+        }
+
+    }
+
+    @Test
+    void sortElementList () {
+        mainList.add(3);
+        mainList.add(1);
+        mainList.add(4);
+        mainList.add(1);
+        mainList.add(2);
+        mainList.add(22);
+        mainList.add(6);
 
 
+
+    }
+
+    @Test
+    void filterThroughSimpleList () {
+
+    }
+    @Test
+    void mapThroughSimpleList () {
+
+    }
+    @Test
+    void reduceThoughSimpeList() {
+
+    }
 
 
 

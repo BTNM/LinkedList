@@ -185,6 +185,12 @@ public class LinkedList<E> implements IList<E> {
         return check;
     }
 
+    /**
+     * - append() goes through every element in list and perform simple operation O(1) for every element, which gives an O(n) runtime
+     * - prepend() goes through every element in list and perform simple operation O(1) for every element, which gives an O(n) runtime
+     * - concat()
+     */
+
     @Override
     public void append(IList<? extends E> list) {
         while (list.first() != null) {
@@ -221,9 +227,10 @@ public class LinkedList<E> implements IList<E> {
 
     @Override
     public void filter(Predicate<? super E> filter) {
-
         // take each element and use filter on each againt them
 //         filter.test()
+
+
     }
 
     @Override
