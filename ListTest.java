@@ -46,7 +46,7 @@ class ListTest {
     @Test
     void emptyAdd() {
         mainList.add(6);
-//        assertEquals(1, mainList.size());
+        assertEquals(1, mainList.size());
 //        mainList.remove();
 
         // check if first element in list are correct
@@ -56,7 +56,7 @@ class ListTest {
     @Test
     void emptyPut() {
         mainList.put(6);
-//        assertEquals(1, mainList.size());
+        assertEquals(1, mainList.size());
         // check if first element in list are correct
         assertEquals (Integer.valueOf(6),mainList.first());
     }
@@ -86,7 +86,7 @@ class ListTest {
 
         // check if add method place value in right place
         mainList.add(7);
-//        assertEquals(2, mainList.size());
+        assertEquals(2, mainList.size());
 
         assertTrue(7 != mainList.first());
 
@@ -100,7 +100,7 @@ class ListTest {
 
         // check if put method place value in right place
         mainList.put(7);
-//        assertEquals(2,mainList.size());
+        assertEquals(2,mainList.size());
 
         assertTrue(7 == mainList.first());
     }
@@ -207,10 +207,14 @@ class ListTest {
     void removeSelectLastElement() {
         setupMultipleElement();
 
+        // removes last element in mainlist
+        mainList.remove(4);
+        assertFalse(mainList.contains(4));
     }
 
+    // maybe write some more tests
     @Test
-    void containElement() {
+    void containHowManyElement() {
         setupMultipleElement();
         int t1 = 7;
         int t2 = 8;
@@ -220,6 +224,13 @@ class ListTest {
         assertTrue(mainList.contains(1));
         assertTrue(mainList.contains(t1));
         assertTrue(mainList.contains(t2));
+    }
+
+    @Test
+    void notContainElement() {
+        mainList.put(9);
+        assertFalse(mainList.contains(1));
+        assertTrue(mainList.contains(9));
     }
 
     @Test
@@ -233,8 +244,40 @@ class ListTest {
     void listSize() {
         setupMultipleElement();
         assertEquals(4,mainList.size());
+        mainList.put(5);
+        mainList.add(6);
+        assertEquals(6,mainList.size());
     }
 
+    @Test
+    void appendList () {
+        setupMultipleElement();
+
+        LinkedList testList = new LinkedList();
+        testList.put(44);
+        testList.put(33);
+        testList.put(22);
+        testList.put(11);
+
+        mainList.append(testList);
+
+        assertEquals(8,mainList.size());
+    }
+
+    @Test
+    void prependList() {
+        setupMultipleElement();
+
+        LinkedList testList = new LinkedList();
+        testList.put(44);
+        testList.put(33);
+        testList.put(22);
+        testList.put(11);
+
+        mainList.prepend(testList);
+
+        assertEquals(8,mainList.size());
+    }
 
 
 

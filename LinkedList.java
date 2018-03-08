@@ -42,9 +42,9 @@ public class LinkedList<E> implements IList<E> {
 
 
     // override slik at equals compare om 2 noder er lik, inner equals kaller Node klassen sin equal metode
-@Override
-public boolean equals(Object o)
-{
+    @Override
+    public boolean equals(Object o)
+    {
     if  ( !(o instanceof LinkedList))
     {
         return false;
@@ -162,7 +162,7 @@ public boolean equals(Object o)
         Node currentNode = firstNode;
 
         while (!found && (currentNode != null)) {
-            if (o.equals(currentNode.getData()) ) {
+            if ( o.equals(currentNode.getData()) ) {
                 found = true;
             } else {
                 currentNode = currentNode.getNextNode();
@@ -187,11 +187,17 @@ public boolean equals(Object o)
 
     @Override
     public void append(IList<? extends E> list) {
+        while (list.first() != null) {
+            lastNode.setNextNode(new Node(list.remove()) );
+        }
 
     }
 
     @Override
     public void prepend(IList<? extends E> list) {
+        while (list.first() != null) {
+            firstNode.setNextNode(new Node(list.remove()) );
+        }
 
     }
 
@@ -232,7 +238,7 @@ public boolean equals(Object o)
 
     @Override
     public int size() {
-        return 0;
+        return numberOfEntries;
     }
 
     @Override
@@ -244,6 +250,48 @@ public boolean equals(Object o)
 
     @Override
     public Iterator<E> iterator() {
-        return null;
+        return new IteratorLinkedList();
     }
+
+    private class IteratorLinkedList implements Iterator<E> {
+        private Node nextNode;
+
+        private IteratorLinkedList () {
+            nextNode = firstNode;
+        }
+
+        public E next() {
+            if (hasNext()) {
+                Node tempNode = nextNode;
+                nextNode = nextNode.getNextNode();
+                return (E) tempNode;
+            } else {
+                throw new NoSuchElementException("Illegal call of next(): " + "iterator is at end of list");
+            }
+        }
+
+        public boolean hasNext() {
+            if (nextNode != null) {
+                return true;
+            }
+            return false;
+        }
+
+        public void remove() {
+            Node prev = nextNode;
+            Node current = nextNode.getNextNode();
+
+            if (nextNode == null) {
+                throw new NoSuchElementException();
+            } else {
+                // set the prev node's next node to skip the coming one and to next node
+                prev.setNextNode(current.getNextNode());
+
+            }
+
+        }
+
+    } // end private iterator class
+
+
 }
