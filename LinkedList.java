@@ -10,8 +10,8 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 
 public class LinkedList<E> implements IList<E> {
-    private Node firstNode; // head reference to first node
-    private Node lastNode;  // last reference to last node
+    private Node<E> firstNode; // head reference to first node
+    private Node<E> lastNode;  // last reference to last node
     private int numberOfEntries;
 
     public LinkedList() {
@@ -21,14 +21,14 @@ public class LinkedList<E> implements IList<E> {
     }
 
     public LinkedList(E newElement) {
-        firstNode = new Node(newElement);
-        lastNode = new Node(newElement);
+        firstNode = new Node<E>(newElement);
+        lastNode = new Node<E>(newElement);
         numberOfEntries = 0;
     }
 
     public LinkedList(E newElement, IList<E> list) {
-        firstNode = new Node(newElement);
-        lastNode = new Node(newElement);
+        firstNode = new Node<E>(newElement);
+        lastNode = new Node<E>(newElement);
         numberOfEntries = 0;
     }
 
@@ -81,6 +81,7 @@ public class LinkedList<E> implements IList<E> {
         Node nextNode = firstNode.getNextNode();
         // SOME PROBLEMS REGARDING RETURN NODE AS ILIST
         // iterate through list and return a new ilist
+
 
         return (IList<E>) nextNode;
     }
@@ -150,8 +151,7 @@ public class LinkedList<E> implements IList<E> {
         return false;
     }
 
-
-
+    /**
     private Node getNodeAt(int position) {
         assert (firstNode != null) && (1 <= position) && (position <= numberOfEntries);
         Node currentNode = firstNode;
@@ -164,6 +164,7 @@ public class LinkedList<E> implements IList<E> {
 
         return currentNode;
     }
+    */
 
     @Override
     public boolean contains(Object o) {
@@ -202,23 +203,43 @@ public class LinkedList<E> implements IList<E> {
 
     @Override
     public void append(IList<? extends E> list) {
-        while (list.first() != null) {
-            lastNode.setNextNode(new Node(list.remove()) );
+//        while (list.first() != null) {
+//            lastNode.setNextNode(new Node(list.remove()) );
+//        }
+        Node<E> newNode;
+
+        for (E element : list) {
+//            lastNode.setNextNode(new Node<E>(element));
+//            newNode = new Node<>(element);
+//            lastNode.setNextNode(newNode);
+//            newNode = lastNode;
+            add(element);
         }
 
     }
 
     @Override
     public void prepend(IList<? extends E> list) {
-        while (list.first() != null) {
-            firstNode.setNextNode(new Node(list.remove()) );
+        Node<E> newNode;
+
+        for (E element : list) {
+//            newNode = new Node<>(element);
+//            newNode.setNextNode(firstNode);
+//            newNode = firstNode;
+            put(element);
         }
 
+//        while (list.first() != null) {
+//            firstNode.setNextNode(new Node(list.remove()) );
+//        }
     }
 
     @Override
     public IList<E> concat(IList<? extends E>... lists) {
 
+        for (IList<? extends E> l : lists) {
+
+        }
 //        Iterator<E> itr = lists.iterator();
 
 //        while (itr.hasNext() ) {
@@ -239,13 +260,18 @@ public class LinkedList<E> implements IList<E> {
     @Override
     public void sort(Comparator<? super E> c) {
 
-
+//        c.compare(firstNode.getData(),firstNode.getNextNode());
     }
 
     @Override
     public void filter(Predicate<? super E> filter) {
         // take each element and use filter on each againt them
-//         filter.test()
+//         filter.test(firstNode.getData());
+
+         while (firstNode != null) {
+             boolean res = filter.test(firstNode.getData());
+             firstNode = firstNode.getNextNode();
+         }
 
 
     }
@@ -253,12 +279,15 @@ public class LinkedList<E> implements IList<E> {
     @Override
     public <U> IList<U> map(Function<? super E, ? extends U> f) {
 //        Function<f ,IList<U>> m = LinkedList:: ;
+        // for each element in list and make and return a IList<U>
+        U result = f.apply(firstNode.getData());
 
         return null;
     }
 
     @Override
     public <T> T reduce(T t, BiFunction<T, ? super E, T> f) {
+//        Function<T>
         return null;
     }
 
@@ -288,9 +317,9 @@ public class LinkedList<E> implements IList<E> {
 
         public E next() {
             if (hasNext()) {
-                Node tempNode = nextNode;
+                Node<E> tempNode = nextNode;
                 nextNode = nextNode.getNextNode();
-                return (E) tempNode;
+                return tempNode.getData();
             } else {
                 throw new NoSuchElementException("Illegal call of next(): " + "iterator is at end of list");
             }

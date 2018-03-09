@@ -277,15 +277,34 @@ class ListTest {
     void appendList () {
         setupMultipleElement();
 
-        LinkedList testList = new LinkedList();
+        LinkedList testList = new LinkedList(); // 11 22 33 44
         testList.put(44);
         testList.put(33);
         testList.put(22);
         testList.put(11);
 
-        mainList.append(testList);
+        mainList.append(testList); // 1 2 3 4
 
         assertEquals(8,mainList.size());
+
+        LinkedList checkList = new LinkedList();
+        checkList.put(4);
+        checkList.put(3);
+        checkList.put(2);
+        checkList.put(1);
+        checkList.put(11);
+        checkList.put(22);
+        checkList.put(33);
+        checkList.put(44);
+
+        assertEquals(8,mainList.size());
+
+        // check that prepend add all element to end of mainlist
+        Iterator<Integer> itrList = mainList.iterator();
+        while (itrList.hasNext()) {
+            assertEquals(checkList.remove(),itrList.next());
+        }
+
     }
 
     @Test
@@ -297,10 +316,26 @@ class ListTest {
         testList.put(33);
         testList.put(22);
         testList.put(11);
-
         mainList.prepend(testList);
 
+        LinkedList checkList = new LinkedList();
+        checkList.put(4);
+        checkList.put(3);
+        checkList.put(2);
+        checkList.put(1);
+        checkList.put(44);
+        checkList.put(33);
+        checkList.put(22);
+        checkList.put(11);
+
         assertEquals(8,mainList.size());
+
+        // check that prepend add all element to end of mainlist
+        Iterator<Integer> itrList = mainList.iterator();
+        while (itrList.hasNext()) {
+            assertEquals(checkList.remove(),itrList.next());
+        }
+
     }
 
     @Test
@@ -319,7 +354,7 @@ class ListTest {
 
         Iterator<Integer> listIterator = mainList.iterator();
         while (listIterator.hasNext() ) {
-//            assertEquals(testList.remove(),listIterator.next().getData() );
+            assertEquals(testList.remove(),listIterator.next() );
         }
 
     }
@@ -340,7 +375,11 @@ class ListTest {
 
     @Test
     void filterThroughSimpleList () {
+        setupMultipleElement();
 
+        // use filter to remove all even integers
+        mainList.filter((tall) -> tall % 2 == 0);
+        assertEquals(2,mainList.size());
     }
     @Test
     void mapThroughSimpleList () {
