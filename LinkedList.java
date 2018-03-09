@@ -12,7 +12,6 @@ import java.util.function.Predicate;
 public class LinkedList<E> implements IList<E> {
     private Node firstNode; // head reference to first node
     private Node lastNode;  // last reference to last node
-    //    private Node restNode;  // tail reference to rest of list, without the first element
     private int numberOfEntries;
 
     public LinkedList() {
@@ -81,6 +80,8 @@ public class LinkedList<E> implements IList<E> {
 
         Node nextNode = firstNode.getNextNode();
         // SOME PROBLEMS REGARDING RETURN NODE AS ILIST
+        // iterate through list and return a new ilist
+
         return (IList<E>) nextNode;
     }
 
@@ -117,6 +118,7 @@ public class LinkedList<E> implements IList<E> {
         }
         Node temp = firstNode;
         firstNode = firstNode.getNextNode();
+        numberOfEntries--;
 
         return (E) temp.getData();
     }
@@ -125,13 +127,20 @@ public class LinkedList<E> implements IList<E> {
     public boolean remove(Object o) {
         Node currentNode = firstNode;
         Node previousNode = firstNode;
+        Node last = lastNode;
 
         while (currentNode != null) {
             if (o.equals(firstNode.getData())) {
                 firstNode = firstNode.getNextNode();
+                numberOfEntries--;
                 return true;
-            } else if (o.equals(currentNode)) {
+            } else if (o.equals(last.getData()) ) {
+                lastNode = null;
+                numberOfEntries--;
+                return true;
+            } else if (o.equals(currentNode.getData())) {
                 previousNode.setNextNode(currentNode.getNextNode());
+                numberOfEntries--;
                 return true;
             }
             previousNode = currentNode;
@@ -209,6 +218,13 @@ public class LinkedList<E> implements IList<E> {
 
     @Override
     public IList<E> concat(IList<? extends E>... lists) {
+
+//        Iterator<E> itr = lists.iterator();
+
+//        while (itr.hasNext() ) {
+//
+//        }
+
         return null;
     }
 
@@ -223,6 +239,7 @@ public class LinkedList<E> implements IList<E> {
     @Override
     public void sort(Comparator<? super E> c) {
 
+
     }
 
     @Override
@@ -235,6 +252,8 @@ public class LinkedList<E> implements IList<E> {
 
     @Override
     public <U> IList<U> map(Function<? super E, ? extends U> f) {
+//        Function<f ,IList<U>> m = LinkedList:: ;
+
         return null;
     }
 

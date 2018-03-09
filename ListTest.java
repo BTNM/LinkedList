@@ -139,7 +139,7 @@ class ListTest {
         assertTrue(7 != mainList.first());
         mainList.add(8);
 
-        // remove first element and check element is put at
+        // remove first element and check element is put at right place
         mainList.remove();
         assertEquals(Integer.valueOf(2),mainList.first());
 
@@ -233,11 +233,22 @@ class ListTest {
         assertTrue(mainList.contains(9));
     }
 
+
     @Test
     void listIsEmpty() {
         assertTrue(mainList.isEmpty());
         mainList.put(22);
         assertFalse(mainList.isEmpty());
+    }
+
+    @Test
+    void emptyListAfterRemove() {
+        setupMultipleElement();
+        mainList.remove();
+        mainList.remove();
+        mainList.remove();
+        mainList.remove();
+        assertFalse(mainList.contains(4));
     }
 
     @Test
@@ -248,6 +259,19 @@ class ListTest {
         mainList.add(6);
         assertEquals(6,mainList.size());
     }
+
+    @Test
+    void sizeAfterDifferentMethods() {
+        setupMultipleElement();
+        mainList.remove();
+        mainList.add(5);
+        mainList.put(11);
+        assertEquals(5,mainList.size());
+
+        mainList.remove(5);
+        assertEquals(4,mainList.size());
+    }
+
 
     @Test
     void appendList () {
