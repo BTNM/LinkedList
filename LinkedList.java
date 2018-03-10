@@ -242,10 +242,13 @@ public class LinkedList<E> implements IList<E> {
 
     @Override
     public IList<E> concat(IList<? extends E>... lists) {
+        IList<E> temp = new LinkedList<E>();
 
+        // combine all elements in all lists
         for (IList<? extends E> l : lists) {
-            // combine all elements in all lists
-
+            for (E element : l) {
+                temp.add(element);
+            }
         }
 //        Iterator<E> itr = lists.iterator();
 
@@ -253,7 +256,7 @@ public class LinkedList<E> implements IList<E> {
 //
 //        }
 
-        return null;
+        return temp;
     }
 
 //    @Override

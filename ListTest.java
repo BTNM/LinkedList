@@ -17,11 +17,11 @@ class ListTest {
 
     }
 
-    void setupOneElement() {
+    private void setupOneElement() {
         mainList.add(1);
     }
 
-    void setupMultipleElement() {
+    private void setupMultipleElement() {
         mainList.add(1);
         mainList.add(2);
         mainList.add(3);
@@ -132,9 +132,8 @@ class ListTest {
         mainList.remove();
         assertEquals(rest, mainList);
 
-        Iterator<Integer> itrList = mainList.iterator();
-        while (itrList.hasNext()) {
-            assertEquals(itrList.next(), rest.remove() );
+        for (Integer check : mainList) {
+            assertEquals(check, rest.remove());
         }
 
     }
@@ -307,9 +306,8 @@ class ListTest {
         checkList.add(44);
 
         // check that append add all element to end of mainlist, in right position
-        Iterator<Integer> itrList = checkList.iterator();
-        while (itrList.hasNext()) {
-            assertEquals(itrList.next(), mainList.remove());
+        for (Integer check : checkList) {
+            assertEquals(check, mainList.remove());
         }
 
     }
@@ -340,9 +338,37 @@ class ListTest {
         checkList.put(11);
 
         // check that prepend add all element to end of mainlist, in right position
-        Iterator<Integer> itrList = checkList.iterator();
-        while (itrList.hasNext()) {
-            assertEquals(itrList.next(), mainList.remove());
+        for (Integer check : checkList) {
+            assertEquals(check, mainList.remove());
+        }
+
+    }
+
+    @Test
+    void concatMultipleList() {
+        LinkedList<Integer> list1 = new LinkedList<>();
+        list1.add(1);
+        list1.add(11);
+        LinkedList<Integer> list2 = new LinkedList<>();
+        list2.add(2);
+        list2.add(22);
+        LinkedList<Integer> list3 = new LinkedList<>();
+        list3.add(3);
+        list3.add(33);
+
+        mainList.concat(list1,list2,list3);
+
+        LinkedList<Integer> checkList = new LinkedList<>();
+        mainList.add(1);
+        mainList.add(11);
+        mainList.add(2);
+        mainList.add(22);
+        mainList.add(3);
+        mainList.add(33);
+
+//        assertEquals(6, mainList.size());
+        for (int check : checkList) {
+            assertEquals(Integer.valueOf(check),mainList.remove());
         }
 
     }
