@@ -238,6 +238,7 @@ public class LinkedList<E> implements IList<E> {
     public IList<E> concat(IList<? extends E>... lists) {
 
         for (IList<? extends E> l : lists) {
+            // combine all elements in all lists
 
         }
 //        Iterator<E> itr = lists.iterator();
@@ -270,6 +271,9 @@ public class LinkedList<E> implements IList<E> {
 
          while (firstNode != null) {
              boolean res = filter.test(firstNode.getData());
+             if (res) {
+                 remove(firstNode);
+             }
              firstNode = firstNode.getNextNode();
          }
 
@@ -279,8 +283,12 @@ public class LinkedList<E> implements IList<E> {
     @Override
     public <U> IList<U> map(Function<? super E, ? extends U> f) {
 //        Function<f ,IList<U>> m = LinkedList:: ;
+
         // for each element in list and make and return a IList<U>
         U result = f.apply(firstNode.getData());
+
+        LinkedList<U> tempList = new LinkedList<>();
+
 
         return null;
     }

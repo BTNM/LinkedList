@@ -4,13 +4,9 @@ package oblig2;
 
 import java.time.Duration;
 import java.util.*;
-
-import static org.junit.jupiter.api.Assertions.*;
-
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestTemplate;
-import org.junit.jupiter.api.function.Executable;
+import org.junit.jupiter.api.BeforeEach;
+import static org.junit.jupiter.api.Assertions.*;
 
 class ListTest {
 
@@ -396,7 +392,8 @@ class ListTest {
     void oppg8_sortIntegers() {
         // Se oppgave 8
         IList<Integer> list = new LinkedList<>();
-        List<Integer> values = Arrays.asList(3, 8, 4, 7, 10, 6, 1, 2, 9, 5);
+        List<Integer> values = Arrays.asList(3, 8, 4, 7, 10, 6,
+                1, 2, 9, 5);
 
         for (Integer value : values) {
             list.add(value);
@@ -412,8 +409,8 @@ class ListTest {
             }
             n = m;
         }
-
     }
+
     @Test
     void oppg8_sortStrings() {
         // Se oppgave 8
@@ -433,7 +430,7 @@ class ListTest {
             if (n.compareTo(m) > 0) {
                 fail("String list is not sorted.");
             }
-
+            n = m;
         }
     }
 
@@ -449,13 +446,12 @@ class ListTest {
 
         list.filter(n -> n % 2 == 1);
 
-        int n = list.remove();
+
         while(list.size() > 0) {
+            int n = list.remove();
             if (n % 2 == 1) {
                 fail("List contains filtered out elements.");
             }
-            n = list.remove();
-
         }
 
     }
@@ -522,12 +518,11 @@ class ListTest {
         assertTimeout(Duration.ofSeconds(2), () -> list.sort(Integer::compare));
 
         int n = list.remove();
-        for(int m = list.remove(); !list.isEmpty(); n = m) {
+        for(int m = list.remove(); !list.isEmpty(); m = list.remove()) {
             if (n > m) {
                 fail("List is not sorted");
             }
+            n = m;
         }
-
-
     }
 }
