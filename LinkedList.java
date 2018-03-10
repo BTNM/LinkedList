@@ -12,6 +12,7 @@ import java.util.function.Predicate;
 public class LinkedList<E> implements IList<E> {
     private Node<E> firstNode; // head reference to first node
     private Node<E> lastNode;  // last reference to last node
+    private IList<E> mainList = null;
     private int numberOfEntries;
 
     public LinkedList() {
@@ -30,6 +31,8 @@ public class LinkedList<E> implements IList<E> {
         firstNode = new Node<E>(newElement);
         lastNode = new Node<E>(newElement);
         numberOfEntries = 0;
+        mainList = list;
+
     }
 
 //    public void resetDataFields () {
@@ -79,11 +82,14 @@ public class LinkedList<E> implements IList<E> {
         }
 
         Node nextNode = firstNode.getNextNode();
-        // SOME PROBLEMS REGARDING RETURN NODE AS ILIST
-        // iterate through list and return a new ilist
+        LinkedList<E> tempList = new LinkedList<>();
 
+        while (nextNode != null) {
+            tempList.add((E) nextNode.getData());
+            nextNode = nextNode.getNextNode();
+        }
 
-        return (IList<E>) nextNode;
+        return tempList;
     }
 
     @Override

@@ -9,7 +9,6 @@ import org.junit.jupiter.api.BeforeEach;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ListTest {
-
     private LinkedList<Integer> mainList;
 
     @BeforeEach
@@ -120,12 +119,24 @@ class ListTest {
     @Test
     void multipleElementsRest () {
         setupMultipleElement();
-//        assertEquals(mainList.size()-1, mainList.rest());
 
         IList<Integer> rest = mainList.rest();
+
+        // check size amount of elements after rest() are correct
+        assertEquals(mainList.size()-1, rest.size());
+
+        // check right element after rest()
+        assertEquals(Integer.valueOf(2),mainList.rest().first());
+
+        // check each element after rest() are in correct position
         mainList.remove();
         assertEquals(rest, mainList);
-        // check innhold mot innhold for hver node i en liste
+
+        Iterator<Integer> itrList = mainList.iterator();
+        while (itrList.hasNext()) {
+            assertEquals(itrList.next(), rest.remove() );
+        }
+
     }
     @Test
     void multipleElementsAdd () {
@@ -138,7 +149,6 @@ class ListTest {
         // remove first element and check element is put at right place
         mainList.remove();
         assertEquals(Integer.valueOf(2),mainList.first());
-
 
 
     }
@@ -154,8 +164,8 @@ class ListTest {
     @Test
     void multipleElementsRemove () {
         setupMultipleElement();
+
         assertEquals(Integer.valueOf(1),mainList.first());
-        assertEquals(Integer.valueOf(2),mainList.rest());
         mainList.remove();
         mainList.remove();
         mainList.remove();
@@ -166,6 +176,7 @@ class ListTest {
     void removeSelectObjectIsFirstElement() {
         int t = 4;
         mainList.put(t);
+
         //check remove(T o) for one element
         assertTrue(mainList.remove(t) );
         assertFalse(mainList.contains(t));
@@ -273,32 +284,32 @@ class ListTest {
     void appendList () {
         setupMultipleElement();
 
-        LinkedList testList = new LinkedList(); // 11 22 33 44
-        testList.put(44);
-        testList.put(33);
-        testList.put(22);
-        testList.put(11);
+        LinkedList<Integer> testList = new LinkedList<>(); // 11 22 33 44
+        testList.add(11);
+        testList.add(22);
+        testList.add(33);
+        testList.add(44);
 
-        mainList.append(testList); // 1 2 3 4
+        mainList.append(testList); // 1 2 3 4 11 22 33 44
 
+        // check size are correct
         assertEquals(8,mainList.size());
 
-        LinkedList checkList = new LinkedList();
-        checkList.put(4);
-        checkList.put(3);
-        checkList.put(2);
-        checkList.put(1);
-        checkList.put(11);
-        checkList.put(22);
-        checkList.put(33);
-        checkList.put(44);
+        LinkedList<Integer> checkList = new LinkedList<>();
+        checkList.add(1);
+        checkList.add(2);
+        checkList.add(3);
+        checkList.add(4);
+        checkList.add(11);
+        checkList.add(22);
+        checkList.add(22);
+        checkList.add(33);
+        checkList.add(44);
 
-        assertEquals(8,mainList.size());
-
-        // check that prepend add all element to end of mainlist
-        Iterator<Integer> itrList = mainList.iterator();
+        // check that append add all element to end of mainlist, in right position
+        Iterator<Integer> itrList = checkList.iterator();
         while (itrList.hasNext()) {
-            assertEquals(checkList.remove(),itrList.next());
+            assertEquals(itrList.next(), mainList.remove());
         }
 
     }
@@ -307,14 +318,18 @@ class ListTest {
     void prependList() {
         setupMultipleElement();
 
-        LinkedList testList = new LinkedList();
-        testList.put(44);
-        testList.put(33);
-        testList.put(22);
+        LinkedList<Integer> testList = new LinkedList<>(); // 11 22 33 44
         testList.put(11);
-        mainList.prepend(testList);
+        testList.put(22);
+        testList.put(33);
+        testList.put(44);
 
-        LinkedList checkList = new LinkedList();
+        mainList.prepend(testList); // 11 22 33 44 1 2 3 4
+
+        // check size are correct
+        assertEquals(8,mainList.size());
+
+        LinkedList<Integer> checkList = new LinkedList<>();
         checkList.put(4);
         checkList.put(3);
         checkList.put(2);
@@ -324,12 +339,10 @@ class ListTest {
         checkList.put(22);
         checkList.put(11);
 
-        assertEquals(8,mainList.size());
-
-        // check that prepend add all element to end of mainlist
-        Iterator<Integer> itrList = mainList.iterator();
+        // check that prepend add all element to end of mainlist, in right position
+        Iterator<Integer> itrList = checkList.iterator();
         while (itrList.hasNext()) {
-            assertEquals(checkList.remove(),itrList.next());
+            assertEquals(itrList.next(), mainList.remove());
         }
 
     }
