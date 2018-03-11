@@ -143,7 +143,7 @@ public class LinkedList<E> implements IList<E> {
                 return true;
             } else if (o.equals(lastNode.getData()) ) {
 //                lastNode = null;
-                previousNode.setNextNode(null);
+//                previousNode.setNextNode(null);
                 lastNode = previousNode;
                 numberOfEntries--;
                 return true;
@@ -152,6 +152,7 @@ public class LinkedList<E> implements IList<E> {
                 numberOfEntries--;
                 return true;
             }
+
             previousNode = currentNode;
             currentNode = currentNode.getNextNode();
         }

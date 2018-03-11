@@ -192,25 +192,28 @@ class ListTest {
         LinkedList<Integer> testList = new LinkedList<>();
         testList.put(4);
         testList.put(3);
-        testList.put(2);
+//        testList.put(2);
         testList.put(1);
 
-//        assertEquals(testList,mainList);
         // check list equals
-        while(!testList.isEmpty()){
+        for (int i : mainList) {
+            assertEquals(Integer.valueOf(i), testList.remove());
+        }
+
+//        while(!testList.isEmpty()){
 //            if (testList.isEmpty() ) {
 //                assertThrows(NoSuchElementException.class, () -> testList.remove());
 //            } else if ( mainList.isEmpty()) {
 //                assertThrows(NoSuchElementException.class, () -> mainList.remove());
 //            }
-
-            // equals kaller klassens sin equal metode(int i dette tilfelle)
-            assertEquals(testList.remove(),mainList.remove());
-        }
+//
+//            // equals kaller klassens sin equal metode(int i dette tilfelle)
+////            assertEquals(testList.remove(),mainList.remove());
+//        }
 
     }
     @Test
-    void removeSelectLastElement() {
+    void removeSelectElement() {
 //        setupMultipleElement();
         mainList.add(1);
         mainList.add(2);
@@ -218,15 +221,18 @@ class ListTest {
         mainList.add(4);
 
 //        System.out.println( mainList.remove(3) );
-        System.out.println( mainList.remove(4) );
+//        System.out.println( mainList.remove(4) );
 
-        for (int i: mainList) {
-            System.out.println(i);
-        }
+//        for (int i: mainList) {
+//            System.out.println(i);
+//        }
+//        System.out.println(mainList.contains(4));
+        mainList.remove(3);
+        assertFalse(mainList.contains(3));
 
+        mainList.remove(4);
         // removes last element in mainlist
-        System.out.println(mainList.contains(4));
-//        assertFalse(mainList.contains(4));
+        assertFalse(mainList.contains(4)); // some problems with removing the last element i list
     }
 
     // maybe write some more tests
