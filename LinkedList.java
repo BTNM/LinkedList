@@ -1,5 +1,5 @@
 package oblig2;
-
+//package no.uib.info233;
 import sun.awt.image.ImageWatched;
 
 import java.util.Comparator;
@@ -12,7 +12,7 @@ import java.util.function.Predicate;
 public class LinkedList<E> implements IList<E> {
     private Node<E> firstNode; // head reference to first node
     private Node<E> lastNode;  // last reference to last node
-    private IList<E> mainList = null;
+    private IList<E> mList = null;
     private int numberOfEntries;
 
     public LinkedList() {
@@ -31,40 +31,31 @@ public class LinkedList<E> implements IList<E> {
         firstNode = new Node<E>(newElement);
         lastNode = new Node<E>(newElement);
         numberOfEntries = 0;
-        mainList = list;
+        mList = list;
 
     }
-
-//    public void resetDataFields () {
-//        numberOfEntries = 0;
-//        lastNode = null;
-//        firstNode = null;
-//
-//    }
-
 
     // override slik at equals compare om 2 noder er lik, inner equals kaller Node klassen sin equal metode
     @Override
-    public boolean equals(Object o)
-    {
-    if  ( !(o instanceof LinkedList))
-    {
-        return false;
-    }
-    Node o1 = firstNode;
-    LinkedList list = (LinkedList)o;
-    Node o2  = list.firstNode;
-    while(o1 != null && o2 != null)
-    {
-        if (! o1.equals(o2))
-        {
+    public boolean equals(Object o) {
+        if  ( !(o instanceof LinkedList)) {
             return false;
         }
-        o1 = o1.getNextNode();
-        o2 = o2.getNextNode();
+
+        Node o1 = firstNode;
+        LinkedList list = (LinkedList)o;
+        Node o2  = list.firstNode;
+
+        while(o1 != null && o2 != null) {
+            if (! o1.equals(o2))
+            {
+                return false;
+            }
+            o1 = o1.getNextNode();
+            o2 = o2.getNextNode();
+        }
+        return true;
     }
-    return true;
-}
 
     @Override
     public E first() throws NoSuchElementException {
@@ -277,8 +268,7 @@ public class LinkedList<E> implements IList<E> {
 
     @Override
     public <U> IList<U> map(Function<? super E, ? extends U> f) {
-//        Function<f ,IList<U>> m = LinkedList:: ;
-        LinkedList<U> tempList = new LinkedList<>();
+       LinkedList<U> tempList = new LinkedList<>();
 
         // for each element in list apply f and return a IList<U>
         while (firstNode != null) {
@@ -295,7 +285,10 @@ public class LinkedList<E> implements IList<E> {
 
     @Override
     public <T> T reduce(T t, BiFunction<T, ? super E, T> f) {
-//        Function<T>
+//        Save t to a sum variable,
+//        then use f function to combine all the values,
+//        Then return the accumulated sum variable
+
         return null;
     }
 
@@ -308,6 +301,7 @@ public class LinkedList<E> implements IList<E> {
     public void clear() {
         firstNode = null;
         lastNode = null;
+        mList = null;
         numberOfEntries = 0;
     }
 

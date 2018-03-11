@@ -536,7 +536,7 @@ class ListTest {
         }
     }
     @Test
-    void reduceThoughSimpeList() {
+    void reduceThoughSimpleList() {
 
     }
 
