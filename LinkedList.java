@@ -262,13 +262,9 @@ public class LinkedList<E> implements IList<E> {
 
     }
 
-
-
     @Override
     public void filter(Predicate<? super E> filter) {
         // take each element and use filter on each againt them
-//         filter.test(firstNode.getData());
-
          while (firstNode != null) {
              boolean res = filter.test(firstNode.getData());
              if (res) {
@@ -276,7 +272,6 @@ public class LinkedList<E> implements IList<E> {
              }
              firstNode = firstNode.getNextNode();
          }
-
 
     }
 
@@ -306,17 +301,6 @@ public class LinkedList<E> implements IList<E> {
 
     @Override
     public int size() {
-//        int count = 0;
-//
-//        while (firstNode != null ) {
-//            firstNode = firstNode.getNextNode();
-//            count++;
-//        }
-
-//        for (E e : this) {
-//            count++;
-//        }
-//        return count;
         return numberOfEntries;
     }
 
