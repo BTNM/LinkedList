@@ -134,15 +134,17 @@ public class LinkedList<E> implements IList<E> {
     public boolean remove(Object o) {
         Node currentNode = firstNode;
         Node previousNode = firstNode;
-        Node last = lastNode;
+//        Node last = lastNode;
 
         while (currentNode != null) {
             if (o.equals(firstNode.getData())) {
                 firstNode = firstNode.getNextNode();
                 numberOfEntries--;
                 return true;
-            } else if (o.equals(last.getData()) ) {
-                lastNode = null;
+            } else if (o.equals(lastNode.getData()) ) {
+//                lastNode = null;
+                previousNode.setNextNode(null);
+                lastNode = previousNode;
                 numberOfEntries--;
                 return true;
             } else if (o.equals(currentNode.getData())) {
@@ -156,21 +158,6 @@ public class LinkedList<E> implements IList<E> {
 
         return false;
     }
-
-    /**
-    private Node getNodeAt(int position) {
-        assert (firstNode != null) && (1 <= position) && (position <= numberOfEntries);
-        Node currentNode = firstNode;
-
-        // traversing the chain to locate given node (fin if pos == 1)
-        for (int i = 0; i < position; i ++) {
-            currentNode = currentNode.getNextNode();
-        }
-        assert currentNode != null;
-
-        return currentNode;
-    }
-    */
 
     @Override
     public boolean contains(Object o) {
@@ -243,29 +230,20 @@ public class LinkedList<E> implements IList<E> {
     @Override
     public IList<E> concat(IList<? extends E>... lists) {
         IList<E> temp = new LinkedList<E>();
+//        int count = 0;
 
-        // combine all elements in all lists
+        // combine all elements in all lists into single list
         for (IList<? extends E> l : lists) {
+//            count = count + l.size();
+
             for (E element : l) {
                 temp.add(element);
             }
         }
-//        Iterator<E> itr = lists.iterator();
-
-//        while (itr.hasNext() ) {
-//
-//        }
+//        this.numberOfEntries = count;
 
         return temp;
     }
-
-//    @Override
-//    public void append(IList<? super E> list) { // extends istedenfor super
-////        put(IList.first());
-////        list.put(first())
-//    }
-
-
 
     @Override
     public void sort(Comparator<? super E> c) {
@@ -310,6 +288,17 @@ public class LinkedList<E> implements IList<E> {
 
     @Override
     public int size() {
+//        int count = 0;
+//
+//        while (firstNode != null ) {
+//            firstNode = firstNode.getNextNode();
+//            count++;
+//        }
+
+//        for (E e : this) {
+//            count++;
+//        }
+//        return count;
         return numberOfEntries;
     }
 

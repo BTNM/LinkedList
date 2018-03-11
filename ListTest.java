@@ -186,8 +186,8 @@ class ListTest {
     void removeSelectMiddleElement() {
         setupMultipleElement();
 
-//        assertTrue(mainList.remove(2) );
-//        assertFalse(mainList.remove(6));
+        assertTrue(mainList.remove(2) );
+        assertFalse(mainList.remove(6));
 
         LinkedList<Integer> testList = new LinkedList<>();
         testList.put(4);
@@ -211,11 +211,22 @@ class ListTest {
     }
     @Test
     void removeSelectLastElement() {
-        setupMultipleElement();
+//        setupMultipleElement();
+        mainList.add(1);
+        mainList.add(2);
+        mainList.add(3);
+        mainList.add(4);
+
+//        System.out.println( mainList.remove(3) );
+        System.out.println( mainList.remove(4) );
+
+        for (int i: mainList) {
+            System.out.println(i);
+        }
 
         // removes last element in mainlist
-        mainList.remove(4);
-        assertFalse(mainList.contains(4));
+        System.out.println(mainList.contains(4));
+//        assertFalse(mainList.contains(4));
     }
 
     // maybe write some more tests
@@ -301,7 +312,6 @@ class ListTest {
         checkList.add(4);
         checkList.add(11);
         checkList.add(22);
-        checkList.add(22);
         checkList.add(33);
         checkList.add(44);
 
@@ -356,19 +366,28 @@ class ListTest {
         list3.add(3);
         list3.add(33);
 
-        mainList.concat(list1,list2,list3);
+//        LinkedList<Integer> temp = new LinkedList<>();
+        IList<Integer> tempList = mainList.concat(list1,list2,list3);
+
+        // check amount of elements of new list
+        assertEquals(6, tempList.size());
 
         LinkedList<Integer> checkList = new LinkedList<>();
-        mainList.add(1);
-        mainList.add(11);
-        mainList.add(2);
-        mainList.add(22);
-        mainList.add(3);
-        mainList.add(33);
+        checkList.add(1);
+        checkList.add(11);
+        checkList.add(2);
+        checkList.add(22);
+        checkList.add(3);
+        checkList.add(33);
 
-//        assertEquals(6, mainList.size());
+//        for (int i : tempList) {
+//            System.out.println(i);
+//
+//        }
+
+        // check that multiple list have been concatenated into single list
         for (int check : checkList) {
-            assertEquals(Integer.valueOf(check),mainList.remove());
+            assertEquals(Integer.valueOf(check), tempList.remove());
         }
 
     }
@@ -393,175 +412,176 @@ class ListTest {
         }
 
     }
+//
+//    @Test
+//    void sortElementList () {
+//        mainList.add(3);
+//        mainList.add(1);
+//        mainList.add(4);
+//        mainList.add(1);
+//        mainList.add(2);
+//        mainList.add(22);
+//        mainList.add(6);
+//
+//
+//
+//    }
+//
+//    @Test
+//    void filterThroughSimpleList () {
+//        setupMultipleElement();
+//
+//        // use filter to remove all even integers
+//        mainList.filter((tall) -> tall % 2 == 0);
+//        assertEquals(2,mainList.size());
+//    }
+//    @Test
+//    void mapThroughSimpleList () {
+//
+//    }
+//    @Test
+//    void reduceThoughSimpeList() {
+//
+//    }
+//
+//
+//
+//    @Test
+//    void oppg8_sortIntegers() {
+//        // Se oppgave 8
+//        IList<Integer> list = new LinkedList<>();
+//        List<Integer> values = Arrays.asList(3, 8, 4, 7, 10, 6,
+//                1, 2, 9, 5);
+//
+//        for (Integer value : values) {
+//            list.add(value);
+//        }
+//        list.sort(Comparator.comparingInt(x -> x));
+//
+//
+//        int n = list.remove();
+//        while (list.size() > 0) {
+//            int m = list.remove();
+//            if (n > m) {
+//                fail("Integer list is not sorted.");
+//            }
+//            n = m;
+//        }
+//    }
+//
+//    @Test
+//    void oppg8_sortStrings() {
+//        // Se oppgave 8
+//        IList<String> list = new LinkedList<>();
+//        List<String> values = Arrays.asList(
+//                "g", "f", "a", "c", "b", "d", "e", "i", "j", "h"
+//        );
+//        for (String value : values) {
+//            list.add(value);
+//        }
+//
+//        list.sort(Comparator.naturalOrder());
+//
+//        String n = list.remove();
+//        while (list.size() > 0) {
+//            String m = list.remove();
+//            if (n.compareTo(m) > 0) {
+//                fail("String list is not sorted.");
+//            }
+//            n = m;
+//        }
+//    }
+//
+//    @Test
+//    void oppg9_filter() {
+//        // Se oppgave 9
+//        List<Integer> values = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+//
+//        IList<Integer> list = new LinkedList<>();
+//        for (Integer value : values) {
+//            list.add(value);
+//        }
+//
+//        list.filter(n -> n % 2 == 1);
+//
+//
+//        while(list.size() > 0) {
+//            int n = list.remove();
+//            if (n % 2 == 1) {
+//                fail("List contains filtered out elements.");
+//            }
+//        }
+//
+//    }
+//
+//    @Test
+//    void oppg10_map() {
+//        // Se oppgave 10
+//        List<String> values = Arrays.asList("1", "2", "3", "4", "5");
+//
+//        IList<String> list = new LinkedList<>();
+//        for (String value : values) {
+//            list.add(value);
+//        }
+//
+//        IList<Integer> result = list.map(Integer::parseInt);
+//
+//        List<Integer> target = Arrays.asList(1, 2, 3, 4, 5);
+//
+//
+//        for (int t : target) {
+//            if (result.remove() != t) {
+//                fail("Result of map gives the wrong value.");
+//            }
+//        }
+//    }
+//
+//    @Test
+//    void oppg11_reduceInts() {
+//        // Se oppgave 11
+//        List<Integer> values = Arrays.asList(1, 2, 3, 4, 5);
+//
+//        IList<Integer> list = new LinkedList<>();
+//        for (Integer value : values) {
+//            list.add(value);
+//        }
+//
+//        int result = list.reduce(0, Integer::sum);
+//
+//        assertEquals(result, 5*((1 + 5)/2));
+//    }
+//
+//    @Test
+//    void oppg11_reduceStrings() {
+//        List<String> values = Arrays.asList("e", "s", "t");
+//        IList<String> list = new LinkedList<>();
+//        for (String s : values) {
+//            list.add(s);
+//        }
+//
+//        String result = list.reduce("t", (acc, s) -> acc + s);
+//
+//        assertEquals(result, "test");
+//    }
+//
+//    @Test
+//    void ex1_FastSort() {
+//        // Se ekstraoppgave 1
+//        Random r = new Random();
+//        IList<Integer> list = new LinkedList<>();
+//        for (int n = 0; n < 1000000; n++) {
+//            list.add(r.nextInt());
+//        }
+//
+//        assertTimeout(Duration.ofSeconds(2), () -> list.sort(Integer::compare));
+//
+//        int n = list.remove();
+//        for(int m = list.remove(); !list.isEmpty(); m = list.remove()) {
+//            if (n > m) {
+//                fail("List is not sorted");
+//            }
+//            n = m;
+//        }
+//    }
 
-    @Test
-    void sortElementList () {
-        mainList.add(3);
-        mainList.add(1);
-        mainList.add(4);
-        mainList.add(1);
-        mainList.add(2);
-        mainList.add(22);
-        mainList.add(6);
-
-
-
-    }
-
-    @Test
-    void filterThroughSimpleList () {
-        setupMultipleElement();
-
-        // use filter to remove all even integers
-        mainList.filter((tall) -> tall % 2 == 0);
-        assertEquals(2,mainList.size());
-    }
-    @Test
-    void mapThroughSimpleList () {
-
-    }
-    @Test
-    void reduceThoughSimpeList() {
-
-    }
-
-
-
-    @Test
-    void oppg8_sortIntegers() {
-        // Se oppgave 8
-        IList<Integer> list = new LinkedList<>();
-        List<Integer> values = Arrays.asList(3, 8, 4, 7, 10, 6,
-                1, 2, 9, 5);
-
-        for (Integer value : values) {
-            list.add(value);
-        }
-        list.sort(Comparator.comparingInt(x -> x));
-
-
-        int n = list.remove();
-        while (list.size() > 0) {
-            int m = list.remove();
-            if (n > m) {
-                fail("Integer list is not sorted.");
-            }
-            n = m;
-        }
-    }
-
-    @Test
-    void oppg8_sortStrings() {
-        // Se oppgave 8
-        IList<String> list = new LinkedList<>();
-        List<String> values = Arrays.asList(
-                "g", "f", "a", "c", "b", "d", "e", "i", "j", "h"
-        );
-        for (String value : values) {
-            list.add(value);
-        }
-
-        list.sort(Comparator.naturalOrder());
-
-        String n = list.remove();
-        while (list.size() > 0) {
-            String m = list.remove();
-            if (n.compareTo(m) > 0) {
-                fail("String list is not sorted.");
-            }
-            n = m;
-        }
-    }
-
-    @Test
-    void oppg9_filter() {
-        // Se oppgave 9
-        List<Integer> values = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
-
-        IList<Integer> list = new LinkedList<>();
-        for (Integer value : values) {
-            list.add(value);
-        }
-
-        list.filter(n -> n % 2 == 1);
-
-
-        while(list.size() > 0) {
-            int n = list.remove();
-            if (n % 2 == 1) {
-                fail("List contains filtered out elements.");
-            }
-        }
-
-    }
-
-    @Test
-    void oppg10_map() {
-        // Se oppgave 10
-        List<String> values = Arrays.asList("1", "2", "3", "4", "5");
-
-        IList<String> list = new LinkedList<>();
-        for (String value : values) {
-            list.add(value);
-        }
-
-        IList<Integer> result = list.map(Integer::parseInt);
-
-        List<Integer> target = Arrays.asList(1, 2, 3, 4, 5);
-
-
-        for (int t : target) {
-            if (result.remove() != t) {
-                fail("Result of map gives the wrong value.");
-            }
-        }
-    }
-
-    @Test
-    void oppg11_reduceInts() {
-        // Se oppgave 11
-        List<Integer> values = Arrays.asList(1, 2, 3, 4, 5);
-
-        IList<Integer> list = new LinkedList<>();
-        for (Integer value : values) {
-            list.add(value);
-        }
-
-        int result = list.reduce(0, Integer::sum);
-
-        assertEquals(result, 5*((1 + 5)/2));
-    }
-
-    @Test
-    void oppg11_reduceStrings() {
-        List<String> values = Arrays.asList("e", "s", "t");
-        IList<String> list = new LinkedList<>();
-        for (String s : values) {
-            list.add(s);
-        }
-
-        String result = list.reduce("t", (acc, s) -> acc + s);
-
-        assertEquals(result, "test");
-    }
-
-    @Test
-    void ex1_FastSort() {
-        // Se ekstraoppgave 1
-        Random r = new Random();
-        IList<Integer> list = new LinkedList<>();
-        for (int n = 0; n < 1000000; n++) {
-            list.add(r.nextInt());
-        }
-
-        assertTimeout(Duration.ofSeconds(2), () -> list.sort(Integer::compare));
-
-        int n = list.remove();
-        for(int m = list.remove(); !list.isEmpty(); m = list.remove()) {
-            if (n > m) {
-                fail("List is not sorted");
-            }
-            n = m;
-        }
-    }
 }
