@@ -16,11 +16,9 @@ class ListTest {
         mainList = new LinkedList<>();
 
     }
-
     private void setupOneElement() {
         mainList.add(1);
     }
-
     private void setupMultipleElement() {
         mainList.add(1);
         mainList.add(2);
@@ -42,11 +40,9 @@ class ListTest {
     void emptyAdd() {
         mainList.add(6);
         assertEquals(1, mainList.size());
-//        mainList.remove();
 
         // check if first element in list are correct
         assertEquals (Integer.valueOf(6), mainList.first());
-
     }
     @Test
     void emptyPut() {
@@ -73,6 +69,7 @@ class ListTest {
     @Test
     void OnlyOneElementRest() {
         setupOneElement();
+        // check response of rest() on list with 1 element
         assertThrows(NoSuchElementException.class, () -> mainList.rest());
     }
     @Test
@@ -135,12 +132,12 @@ class ListTest {
         for (Integer check : mainList) {
             assertEquals(check, rest.remove());
         }
-
     }
     @Test
     void multipleElementsAdd () {
         setupMultipleElement();
 
+        // check if element in right position after add()
         mainList.add(7);
         assertTrue(7 != mainList.first());
         mainList.add(8);
@@ -148,13 +145,12 @@ class ListTest {
         // remove first element and check element is put at right place
         mainList.remove();
         assertEquals(Integer.valueOf(2),mainList.first());
-
-
     }
     @Test
     void multipleElementsPut () {
         setupMultipleElement();
 
+        // check if element in right position after put()
         mainList.put(7);
         assertEquals(Integer.valueOf(7),mainList.first());
         mainList.put(8);
@@ -164,6 +160,7 @@ class ListTest {
     void multipleElementsRemove () {
         setupMultipleElement();
 
+        // check if element in right position after remove()
         assertEquals(Integer.valueOf(1),mainList.first());
         mainList.remove();
         mainList.remove();
@@ -180,7 +177,6 @@ class ListTest {
         assertTrue(mainList.remove(t) );
         assertFalse(mainList.contains(t));
         assertThrows(NoSuchElementException.class, () -> mainList.remove());
-
     }
     @Test
     void removeSelectMiddleElement() {
@@ -192,25 +188,12 @@ class ListTest {
         LinkedList<Integer> testList = new LinkedList<>();
         testList.put(4);
         testList.put(3);
-//        testList.put(2);
         testList.put(1);
 
-        // check list equals
+        // check list equals with test list
         for (int i : mainList) {
             assertEquals(Integer.valueOf(i), testList.remove());
         }
-
-//        while(!testList.isEmpty()){
-//            if (testList.isEmpty() ) {
-//                assertThrows(NoSuchElementException.class, () -> testList.remove());
-//            } else if ( mainList.isEmpty()) {
-//                assertThrows(NoSuchElementException.class, () -> mainList.remove());
-//            }
-//
-//            // equals kaller klassens sin equal metode(int i dette tilfelle)
-////            assertEquals(testList.remove(),mainList.remove());
-//        }
-
     }
     @Test
     void removeSelectElement() {
@@ -235,7 +218,6 @@ class ListTest {
         assertFalse(mainList.contains(4)); // some problems with removing the last element i list
     }
 
-    // maybe write some more tests
     @Test
     void containHowManyElement() {
         setupMultipleElement();
@@ -248,7 +230,6 @@ class ListTest {
         assertTrue(mainList.contains(t1));
         assertTrue(mainList.contains(t2));
     }
-
     @Test
     void notContainElement() {
         mainList.put(9);
@@ -256,19 +237,24 @@ class ListTest {
         assertTrue(mainList.contains(9));
     }
 
-
     @Test
     void listIsEmpty() {
+        // check isEmpty() return right response
         assertTrue(mainList.isEmpty());
         mainList.put(22);
+
+        // isEmpty() gives back false with 1 element
         assertFalse(mainList.isEmpty());
     }
-
     @Test
     void emptyListAfterRemove() {
         setupMultipleElement();
+        // check size() of list after remove
+        assertEquals(4, mainList.size());
         mainList.remove();
         mainList.remove();
+        assertEquals(2, mainList.size());
+
         mainList.remove();
         mainList.remove();
         assertFalse(mainList.contains(4));
@@ -277,15 +263,17 @@ class ListTest {
     @Test
     void listSize() {
         setupMultipleElement();
+        // check the size of list
         assertEquals(4,mainList.size());
         mainList.put(5);
         mainList.add(6);
         assertEquals(6,mainList.size());
     }
-
     @Test
     void sizeAfterDifferentMethods() {
         setupMultipleElement();
+
+        // check the size of list after the main methods
         mainList.remove();
         mainList.add(5);
         mainList.put(11);
@@ -295,7 +283,18 @@ class ListTest {
         assertEquals(4,mainList.size());
     }
 
+    @Test
+    void appendEmptyList() {
+        setupOneElement();
 
+        // check append on empty list
+        assertEquals(1,mainList.size());
+
+        LinkedList<Integer> testList = new LinkedList<>();
+        mainList.append(testList);
+
+        assertEquals(1,mainList.size());
+    }
     @Test
     void appendList () {
         setupMultipleElement();
@@ -327,7 +326,13 @@ class ListTest {
         }
 
     }
-
+    @Test
+    void prependOnSameList () {
+        setupOneElement();
+        mainList.prepend(mainList);
+        // check prepend on the same list
+        assertEquals(2,mainList.size());
+    }
     @Test
     void prependList() {
         setupMultipleElement();
@@ -357,7 +362,6 @@ class ListTest {
         for (Integer check : checkList) {
             assertEquals(check, mainList.remove());
         }
-
     }
 
     @Test
@@ -372,7 +376,6 @@ class ListTest {
         list3.add(3);
         list3.add(33);
 
-//        LinkedList<Integer> temp = new LinkedList<>();
         IList<Integer> tempList = mainList.concat(list1,list2,list3);
 
         // check amount of elements of new list
@@ -385,11 +388,6 @@ class ListTest {
         checkList.add(22);
         checkList.add(3);
         checkList.add(33);
-
-//        for (int i : tempList) {
-//            System.out.println(i);
-//
-//        }
 
         // check that multiple list have been concatenated into single list
         for (int check : checkList) {
@@ -418,33 +416,64 @@ class ListTest {
         }
 
     }
-//
-//    @Test
-//    void sortElementList () {
-//        mainList.add(3);
-//        mainList.add(1);
-//        mainList.add(4);
-//        mainList.add(1);
-//        mainList.add(2);
-//        mainList.add(22);
-//        mainList.add(6);
-//
-//
-//
-//    }
-//
-//    @Test
-//    void filterThroughSimpleList () {
-//        setupMultipleElement();
-//
-//        // use filter to remove all even integers
-//        mainList.filter((tall) -> tall % 2 == 0);
-//        assertEquals(2,mainList.size());
-//    }
-//    @Test
-//    void mapThroughSimpleList () {
-//
-//    }
+
+    @Test
+    void sortElementList () {
+        mainList.add(3);
+        mainList.add(1);
+        mainList.add(4);
+        mainList.add(1);
+        mainList.add(2);
+        mainList.add(22);
+        mainList.add(6);
+
+        Comparator<Integer> comp = new Comparator<Integer>() {
+            @Override
+            public int compare(Integer o1, Integer o2) {
+                int result;
+                if(o1.equals(o2)) {
+                    result = 0;
+                } else if (o1 < o2) {
+                    result = -1;
+                } else {
+                    result = 1;
+                }
+
+                return result;
+            }
+        };
+
+        mainList.sort(comp);
+
+        LinkedList<Integer> checkList = new LinkedList<>();
+        checkList.add(1);
+        checkList.add(1);
+        checkList.add(2);
+        checkList.add(3);
+        checkList.add(4);
+        checkList.add(6);
+        checkList.add(22);
+
+        // check sorted right
+        for (int check : checkList) {
+            assertEquals(Integer.valueOf(check), mainList.remove());
+        }
+
+
+    }
+
+    @Test
+    void filterThroughSimpleList () {
+        setupMultipleElement();
+
+        // use filter to remove all even integers
+        mainList.filter((tall) -> tall % 2 == 0);
+        assertEquals(2,mainList.size());
+    }
+    @Test
+    void mapThroughSimpleList () {
+
+    }
 //    @Test
 //    void reduceThoughSimpeList() {
 //

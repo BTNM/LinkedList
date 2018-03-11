@@ -189,24 +189,9 @@ public class LinkedList<E> implements IList<E> {
         return check;
     }
 
-    /**
-     * - append() goes through every element in list and perform simple operation O(1) for every element, which gives an O(n) runtime
-     * - prepend() goes through every element in list and perform simple operation O(1) for every element, which gives an O(n) runtime
-     * - concat()
-     */
-
     @Override
     public void append(IList<? extends E> list) {
-//        while (list.first() != null) {
-//            lastNode.setNextNode(new Node(list.remove()) );
-//        }
-        Node<E> newNode;
-
         for (E element : list) {
-//            lastNode.setNextNode(new Node<E>(element));
-//            newNode = new Node<>(element);
-//            lastNode.setNextNode(newNode);
-//            newNode = lastNode;
             add(element);
         }
 
@@ -214,43 +199,70 @@ public class LinkedList<E> implements IList<E> {
 
     @Override
     public void prepend(IList<? extends E> list) {
-        Node<E> newNode;
-
         for (E element : list) {
-//            newNode = new Node<>(element);
-//            newNode.setNextNode(firstNode);
-//            newNode = firstNode;
             put(element);
         }
 
-//        while (list.first() != null) {
-//            firstNode.setNextNode(new Node(list.remove()) );
-//        }
     }
 
     @Override
     public IList<E> concat(IList<? extends E>... lists) {
         IList<E> temp = new LinkedList<E>();
-//        int count = 0;
 
-        // combine all elements in all lists into single list
         for (IList<? extends E> l : lists) {
-//            count = count + l.size();
-
             for (E element : l) {
                 temp.add(element);
             }
         }
-//        this.numberOfEntries = count;
 
         return temp;
     }
 
     @Override
     public void sort(Comparator<? super E> c) {
-
 //        c.compare(firstNode.getData(),firstNode.getNextNode());
+
+        if (size() > 1) {
+            assert firstNode != null;
+
+            // split into unsorted and sorted
+            Node unsorted = firstNode.getNextNode();
+            assert unsorted != null;
+            firstNode.setNextNode(null);
+
+            while (unsorted != null) {
+                Node insertNode = unsorted;
+                unsorted = unsorted.getNextNode();
+                insertInRightPos(insertNode, c);
+            }
+
+        } // end if
+
     }
+
+    private void insertInRightPos (Node insertedNode, Comparator<? super E> c) {
+        E data = (E) insertedNode.getData();
+        Node currentNode = firstNode;
+        Node previousNode = null;
+
+        // find insertion position
+        while ((currentNode != null) && (c.compare(data, (E) currentNode.getData()) > 0)) { // some problems with c
+            previousNode = currentNode;
+            currentNode = currentNode.getNextNode();
+        }
+
+        // insert into chain
+        if (previousNode != null) {
+            previousNode.setNextNode(insertedNode);
+            insertedNode.setNextNode(currentNode);
+        } else { // insert at the beginning
+            insertedNode.setNextNode(firstNode);
+            firstNode = insertedNode;
+        }
+
+    }
+
+
 
     @Override
     public void filter(Predicate<? super E> filter) {
@@ -271,14 +283,19 @@ public class LinkedList<E> implements IList<E> {
     @Override
     public <U> IList<U> map(Function<? super E, ? extends U> f) {
 //        Function<f ,IList<U>> m = LinkedList:: ;
-
-        // for each element in list and make and return a IList<U>
-        U result = f.apply(firstNode.getData());
-
         LinkedList<U> tempList = new LinkedList<>();
 
+        // for each element in list apply f and return a IList<U>
+        while (firstNode != null) {
+            U result = f.apply(firstNode.getData());
+            if (result != null) {
+                tempList.add(result);
+            }
+            firstNode = firstNode.getNextNode();
 
-        return null;
+        }
+
+        return tempList;
     }
 
     @Override
