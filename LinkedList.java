@@ -125,7 +125,6 @@ public class LinkedList<E> implements IList<E> {
     public boolean remove(Object o) {
         Node currentNode = firstNode;
         Node previousNode = firstNode;
-//        Node last = lastNode;
 
         while (currentNode != null) {
             if (o.equals(firstNode.getData())) {
@@ -134,8 +133,7 @@ public class LinkedList<E> implements IList<E> {
                 return true;
             } else if (o.equals(lastNode.getData()) ) {
 //                lastNode = null;
-//                previousNode.setNextNode(null);
-                lastNode = previousNode;
+                lastNode = previousNode; // some problems
                 numberOfEntries--;
                 return true;
             } else if (o.equals(currentNode.getData())) {

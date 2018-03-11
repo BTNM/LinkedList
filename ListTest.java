@@ -1,5 +1,6 @@
 package oblig2;
 //package no.uib.info233;
+
 //org.junit.jupiter.api.Test;
 
 import java.time.Duration;
