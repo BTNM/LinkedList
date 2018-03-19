@@ -340,11 +340,12 @@ class ListTest {
     void prependList() {
         setupMultipleElement();
 
-        LinkedList<Integer> testList = new LinkedList<>(); // 11 22 33 44
+        LinkedList<Integer> testList = new LinkedList<>(); // 44 33 22 11
         testList.put(11);
         testList.put(22);
         testList.put(33);
         testList.put(44);
+
 
         mainList.prepend(testList); // 11 22 33 44 1 2 3 4
 
@@ -360,6 +361,10 @@ class ListTest {
         checkList.put(33);
         checkList.put(22);
         checkList.put(11);
+
+//        for (int i : checkList) {
+//            System.out.println(i);
+//        }
 
         // check that prepend add all element to end of mainlist, in right position
         for (Integer check : checkList) {

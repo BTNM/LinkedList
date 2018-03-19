@@ -32,7 +32,7 @@ public class LinkedList<E> implements IList<E> {
         lastNode = new Node<E>(newElement);
         numberOfEntries = 0;
         mList = list;
-        
+
 
 
     }
@@ -190,9 +190,18 @@ public class LinkedList<E> implements IList<E> {
 
     @Override
     public void prepend(IList<? extends E> list) {
+//        for (E element : list) {
+//            put(element);
+//        }
+
+        LinkedList<E> tempList = new LinkedList<>();
         for (E element : list) {
+            tempList.put(element);
+        }
+        for (E element : tempList) {
             put(element);
         }
+
 
     }
 
