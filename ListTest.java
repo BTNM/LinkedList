@@ -341,10 +341,10 @@ class ListTest {
         setupMultipleElement();
 
         LinkedList<Integer> testList = new LinkedList<>(); // 44 33 22 11
-        testList.put(11);
-        testList.put(22);
-        testList.put(33);
         testList.put(44);
+        testList.put(33);
+        testList.put(22);
+        testList.put(11);
 
 
         mainList.prepend(testList); // 11 22 33 44 1 2 3 4
