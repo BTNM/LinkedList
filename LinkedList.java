@@ -32,6 +32,8 @@ public class LinkedList<E> implements IList<E> {
         lastNode = new Node<E>(newElement);
         numberOfEntries = 0;
         mList = list;
+        
+
 
     }
 
