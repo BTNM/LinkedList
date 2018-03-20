@@ -5,6 +5,7 @@ package oblig2;
 
 import java.time.Duration;
 import java.util.*;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 import org.junit.jupiter.api.Test;
@@ -206,19 +207,14 @@ class ListTest {
         mainList.add(3);
         mainList.add(4);
 
-//        System.out.println( mainList.remove(3) );
-//        System.out.println( mainList.remove(4) );
-
-//        for (int i: mainList) {
-//            System.out.println(i);
-//        }
-//        System.out.println(mainList.contains(4));
+        // check if mainlist removes correct element
         mainList.remove(3);
         assertFalse(mainList.contains(3));
 
-        mainList.remove(4);
         // removes last element in mainlist
-        assertFalse(mainList.contains(4)); // some problems with removing the last element i list
+        assertTrue(mainList.remove(4) );
+        assertFalse(mainList.contains(4));
+
     }
 
     @Test
@@ -409,9 +405,9 @@ class ListTest {
         setupMultipleElement();
 
         // check if iterator works and takes out/iterate through each element
-        mainList.add(5);
+        mainList.add(5); // main list
 
-        LinkedList<Integer> testList = new LinkedList<>();
+        LinkedList<Integer> testList = new LinkedList<>(); // different check list
         testList.put(5);
         testList.put(4);
         testList.put(3);
@@ -424,6 +420,7 @@ class ListTest {
         }
 
     }
+    // test for tom liste
 
     @Test
     void sortElementList () {
@@ -512,7 +509,11 @@ class ListTest {
 
         // use filter to remove all even integers
         mainList.filter((tall) -> tall % 2 == 0);
-        assertEquals(2,mainList.size());
+//        mainList.filter((e) -> false);
+//        assertEquals(2,mainList.size());
+        for (int e : mainList) {
+            System.out.println(e);
+        }
     }
     @Test
     void filterOddList () {
@@ -537,13 +538,21 @@ class ListTest {
         checkList.add(8);
 
         // check if function in map() are applied rightly
-        for (int x : checkList) {
-//            assertEquals(Integer.valueOf(x), mainList.remove());
+//        for (int x : checkList) {
+////            assertEquals(Integer.valueOf(x), mainList.remove());
+//        }
+        IList<Integer> tempList = new LinkedList<>();
+        tempList = checkList.map(e -> e+3);
+        for (int e : tempList) {
+            System.out.println(e);
         }
+
     }
     @Test
     void reduceThoughSimpleList() {
-
+        // bifunction takes 2 input and do stuff on them, and returns 1
+        BiFunction<Integer, Integer, Integer> reductionFunc = (acc, num) -> acc + num;
+        mainList.reduce(0, reductionFunc);
     }
 
 

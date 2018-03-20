@@ -2,7 +2,7 @@ package oblig2;
 
 public class Node<T> {
     private T data;     //entry in queue
-    private Node next;  // link to next node
+    private Node<T> next;  // link to next node
 
     public Node(T data) {
         this(data,null);
@@ -21,7 +21,7 @@ public class Node<T> {
         this.data = data;
     }
 
-    public Node getNextNode() {
+    public Node<T> getNextNode() {
         return next;
     }
 

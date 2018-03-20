@@ -23,17 +23,15 @@ public class LinkedList<E> implements IList<E> {
 
     public LinkedList(E newElement) {
         firstNode = new Node<E>(newElement);
-        lastNode = new Node<E>(newElement);
-        numberOfEntries = 0;
+        lastNode = firstNode;
+        numberOfEntries = 1;
     }
 
     public LinkedList(E newElement, IList<E> list) {
         firstNode = new Node<E>(newElement);
-        lastNode = new Node<E>(newElement);
-        numberOfEntries = 0;
-        mList = list;
-
-
+        lastNode = firstNode;
+        numberOfEntries = 1;
+        append(list);
 
     }
 
@@ -131,11 +129,6 @@ public class LinkedList<E> implements IList<E> {
         while (currentNode != null) {
             if (o.equals(firstNode.getData())) {
                 firstNode = firstNode.getNextNode();
-                numberOfEntries--;
-                return true;
-            } else if (o.equals(lastNode.getData()) ) {
-//                lastNode = null;
-                lastNode = previousNode; // some problems
                 numberOfEntries--;
                 return true;
             } else if (o.equals(currentNode.getData())) {
@@ -265,12 +258,13 @@ public class LinkedList<E> implements IList<E> {
     @Override
     public void filter(Predicate<? super E> filter) {
         // take each element and use filter on each againt them
-         while (firstNode != null) {
-             boolean res = filter.test(firstNode.getData());
+        Node<E> tempNode = firstNode;
+         while (tempNode != null) {
+             boolean res = filter.test(tempNode.getData());
              if (res) {
-                 remove(firstNode);
+                 remove(tempNode);
              }
-             firstNode = firstNode.getNextNode();
+             tempNode = tempNode.getNextNode();
          }
 
     }
@@ -297,8 +291,16 @@ public class LinkedList<E> implements IList<E> {
 //        Save t to a sum variable,
 //        then use f function to combine all the values,
 //        Then return the accumulated sum variable
+        Node<E> tempNode = firstNode;
+        T result = null;
+        while (tempNode != null) {
+            t = f.apply(t, tempNode.getData());
 
-        return null;
+
+            tempNode = tempNode.getNextNode();
+        }
+
+        return t;
     }
 
     @Override
