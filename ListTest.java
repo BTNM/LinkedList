@@ -10,6 +10,9 @@ import java.util.function.Function;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
+
+import javax.sound.sampled.Line;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class ListTest {
@@ -420,7 +423,17 @@ class ListTest {
         }
 
     }
-    // test for tom liste
+
+    @Test
+    void iterateEmptyList() {
+
+        Iterator<Integer> listItr = mainList.iterator();
+
+        assertFalse(listItr.hasNext());
+
+        // check that throws exp when itr calls next() on empty list
+        assertThrows(NoSuchElementException.class, () -> listItr.next());
+    }
 
     @Test
     void sortElementList () {
@@ -472,18 +485,7 @@ class ListTest {
         mainList.add(12);
         mainList.add(6);
 
-        Comparator<Integer> comp = (o1, o2) -> {
-            int result;
-            if(o1.equals(o2)) {
-                result = 0;
-            } else if (o1 < o2) {
-                result = -1;
-            } else {
-                result = 1;
-            }
-
-            return result;
-        };
+        Comparator<Integer> comp = Comparator.naturalOrder();
         // sort with comparator
         mainList.sort(comp);
 
@@ -509,11 +511,7 @@ class ListTest {
 
         // use filter to remove all even integers
         mainList.filter((tall) -> tall % 2 == 0);
-//        mainList.filter((e) -> false);
-//        assertEquals(2,mainList.size());
-        for (int e : mainList) {
-            System.out.println(e);
-        }
+
     }
     @Test
     void filterOddList () {
@@ -521,7 +519,6 @@ class ListTest {
 
         // use filter to remove all even integers
         mainList.filter((tall) -> tall % 2 != 0);
-        assertEquals(2,mainList.size());
     }
 
 

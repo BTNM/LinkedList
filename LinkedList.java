@@ -263,9 +263,11 @@ public class LinkedList<E> implements IList<E> {
              boolean res = filter.test(tempNode.getData());
              if (res) {
                  remove(tempNode);
+                 numberOfEntries--;
              }
              tempNode = tempNode.getNextNode();
          }
+
 
     }
 
@@ -295,7 +297,6 @@ public class LinkedList<E> implements IList<E> {
         T result = null;
         while (tempNode != null) {
             t = f.apply(t, tempNode.getData());
-
 
             tempNode = tempNode.getNextNode();
         }
