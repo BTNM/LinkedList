@@ -290,11 +290,9 @@ public class LinkedList<E> implements IList<E> {
 
     @Override
     public <T> T reduce(T t, BiFunction<T, ? super E, T> f) {
-//        Save t to a sum variable,
-//        then use f function to combine all the values,
-//        Then return the accumulated sum variable
+//        t as a sum variable, use f function to combine all the values, return t as accumulated sum variable
         Node<E> tempNode = firstNode;
-        T result = null;
+
         while (tempNode != null) {
             t = f.apply(t, tempNode.getData());
 

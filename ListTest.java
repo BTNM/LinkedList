@@ -10,6 +10,7 @@ import java.util.function.Function;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
+import sun.rmi.server.InactiveGroupException;
 
 import javax.sound.sampled.Line;
 
@@ -521,12 +522,19 @@ class ListTest {
         mainList.filter((tall) -> tall % 2 != 0);
     }
 
+    @Test
+    void filterEmptyList () {
+
+        mainList.filter((e) -> e % 2 == 0);
+
+    }
+
 
     @Test
     void mapThroughSimpleList () {
         setupMultipleElement();
 
-        mainList.map((i) -> i*2 );
+        IList<Integer> tempList = mainList.map((i) -> i*2 );
 
         LinkedList<Integer> checkList = new LinkedList<>();
         checkList.add(2);
@@ -535,21 +543,50 @@ class ListTest {
         checkList.add(8);
 
         // check if function in map() are applied rightly
-//        for (int x : checkList) {
-////            assertEquals(Integer.valueOf(x), mainList.remove());
-//        }
-        IList<Integer> tempList = new LinkedList<>();
-        tempList = checkList.map(e -> e+3);
-        for (int e : tempList) {
-            System.out.println(e);
+        for (int x : checkList) {
+            assertEquals(Integer.valueOf(x), tempList.remove());
+        }
+
+
+        IList<Integer> tempList2 = mainList.map((i) -> i+3 );
+
+        LinkedList<Integer> checkList2 = new LinkedList<>();
+        checkList.add(4);
+        checkList.add(5);
+        checkList.add(6);
+        checkList.add(7);
+
+        for (int e : tempList2) {
+            assertEquals( checkList2, e );
         }
 
     }
+
+    @Test
+    void mapEmptyList () {
+
+        IList<Integer> tempList = mainList.map((i) -> i*2 );
+
+        for (int e : tempList) {
+            assertEquals(null, e);
+        }
+
+    }
+
+
     @Test
     void reduceThoughSimpleList() {
-        // bifunction takes 2 input and do stuff on them, and returns 1
-        BiFunction<Integer, Integer, Integer> reductionFunc = (acc, num) -> acc + num;
-        mainList.reduce(0, reductionFunc);
+        setupMultipleElement();
+
+        // bifunction takes 2 input and use func on them, and returns 1 value
+        BiFunction<Integer, Integer, Integer> reduceAdd = (acc, num) -> acc + num;
+        // test if reduce() can sum of everything
+        assertEquals(Integer.valueOf(10), mainList.reduce(0, reduceAdd));
+
+        BiFunction<Integer, Integer, Integer> reduceMult = (acc, num) -> acc * num;
+        // 1*2*3*4 = 24
+        assertEquals(Integer.valueOf(24), mainList.reduce(0, reduceMult ));
+
     }
 
 
