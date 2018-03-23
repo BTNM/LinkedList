@@ -424,6 +424,18 @@ class ListTest {
         }
 
     }
+    @Test
+    void iteratorRemove() {
+        setupMultipleElement();
+
+        Iterator<Integer> itrList = mainList.iterator();
+        Integer first = itrList.next();
+        itrList.remove();
+
+        assertFalse(mainList.contains(first));
+
+    }
+
 
     @Test
     void iterateEmptyList() {
@@ -533,11 +545,19 @@ class ListTest {
         // use filter to remove all even integers
         mainList.filter((tall) -> tall % 2 != 0);
 
+        LinkedList<Integer> checkList = new LinkedList<>();
+        checkList.add(2);
+        checkList.add(4);
+
+        for (int check : checkList) {
+            assertEquals(Integer.valueOf(check), mainList.remove());
+        }
+
     }
 
     @Test
     void filterEmptyList () {
-        // check if filter() can be used on an empty list
+        // check if filter() can be used on an empty list, without crashing
         mainList.filter((e) -> e % 2 == 0);
     }
 
@@ -595,26 +615,11 @@ class ListTest {
         // test if reduce() can sum of everything
         assertEquals(Integer.valueOf(10), mainList.reduce(0, reduceAdd));
 
-
-        // STILL some problems
         BiFunction<Integer, Integer, Integer> reduceMult = (acc, num) -> acc * num;
-        // 1*2*3*4 = 24
+        // 1*2*3*4 = 24, if reduce() can mulitply everything
         assertEquals(Integer.valueOf(24), mainList.reduce(1, reduceMult ));
 
     }
-
-//    @Test
-//    void check () {
-//        int sum = 0;
-//        for (int i = 0; i< 1000000; i++) {
-////            System.out.println("The number is: "+ i);
-//            sum += i;
-//
-//        }
-//        System.out.println(sum);
-//    }
-
-
 
     @Test
     void oppg8_sortIntegers() {

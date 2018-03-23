@@ -183,9 +183,6 @@ public class LinkedList<E> implements IList<E> {
 
     @Override
     public void prepend(IList<? extends E> list) {
-//        for (E element : list) {
-//            put(element);
-//        }
 
         LinkedList<E> tempList = new LinkedList<>();
         for (E element : list) {
@@ -350,8 +347,9 @@ public class LinkedList<E> implements IList<E> {
             if (nextNode == null) {
                 throw new NoSuchElementException();
             } else {
-                // set the prev node's next node to skip the coming one and to next node
+                // set the prev node's next node to skip the coming one and move to next node
                 prev.setNextNode(current.getNextNode());
+//                LinkedList.this.remove(current);
 
             }
 
