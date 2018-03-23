@@ -513,6 +513,10 @@ class ListTest {
         // use filter to remove all even integers
         mainList.filter((tall) -> tall % 2 == 0);
 
+        for (int e : mainList) {
+            System.out.println(e);
+        }
+
         LinkedList<Integer> checkList = new LinkedList<>();
         checkList.add(1);
         checkList.add(3);
@@ -533,11 +537,8 @@ class ListTest {
 
     @Test
     void filterEmptyList () {
-
+        // check if filter() can be used on an empty list
         mainList.filter((e) -> e % 2 == 0);
-
-        //not fin
-
     }
 
 
@@ -598,20 +599,20 @@ class ListTest {
         // STILL some problems
         BiFunction<Integer, Integer, Integer> reduceMult = (acc, num) -> acc * num;
         // 1*2*3*4 = 24
-        assertEquals(Integer.valueOf(24), mainList.reduce(0, reduceMult ));
+        assertEquals(Integer.valueOf(24), mainList.reduce(1, reduceMult ));
 
     }
 
-    @Test
-    void check () {
-        int sum = 0;
-        for (int i = 0; i< 1000000; i++) {
-//            System.out.println("The number is: "+ i);
-            sum += i;
-
-        }
-        System.out.println(sum);
-    }
+//    @Test
+//    void check () {
+//        int sum = 0;
+//        for (int i = 0; i< 1000000; i++) {
+////            System.out.println("The number is: "+ i);
+//            sum += i;
+//
+//        }
+//        System.out.println(sum);
+//    }
 
 
 

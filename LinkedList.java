@@ -262,12 +262,11 @@ public class LinkedList<E> implements IList<E> {
          while (tempNode != null) {
              boolean res = filter.test(tempNode.getData());
              if (res) {
-                 remove(tempNode);
+                 remove(tempNode.getData());
                  numberOfEntries--;
              }
              tempNode = tempNode.getNextNode();
          }
-
 
     }
 
