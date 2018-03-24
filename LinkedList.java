@@ -1,6 +1,5 @@
 package oblig2;
 //package no.uib.info233;
-import sun.awt.image.ImageWatched;
 
 import java.util.Comparator;
 import java.util.Iterator;
@@ -256,20 +255,20 @@ public class LinkedList<E> implements IList<E> {
     public void filter(Predicate<? super E> filter) {
         // take each element and use filter on each againt them
         Node<E> tempNode = firstNode;
-         while (tempNode != null) {
-             boolean res = filter.test(tempNode.getData());
-             if (res) {
-                 remove(tempNode.getData());
-                 numberOfEntries--;
-             }
-             tempNode = tempNode.getNextNode();
-         }
+        while (tempNode != null) {
+            boolean res = filter.test(tempNode.getData());
+            if (res) {
+                remove(tempNode.getData());
+                numberOfEntries--;
+            }
+            tempNode = tempNode.getNextNode();
+        }
 
     }
 
     @Override
     public <U> IList<U> map(Function<? super E, ? extends U> f) {
-       LinkedList<U> tempList = new LinkedList<>();
+        LinkedList<U> tempList = new LinkedList<>();
 
         // for each element in list apply f and return a IList<U>
         while (firstNode != null) {
@@ -317,40 +316,37 @@ public class LinkedList<E> implements IList<E> {
     }
 
     private class IteratorLinkedList implements Iterator<E> {
-        private Node nextNode;
+        private Node<E> previousNode;
+        private Node<E> currentNode;
 
         private IteratorLinkedList () {
-            nextNode = firstNode;
+            currentNode = firstNode;
+            previousNode = null;
         }
 
         public E next() {
             if (hasNext()) {
-                Node<E> tempNode = nextNode;
-                nextNode = nextNode.getNextNode();
-                return tempNode.getData();
+                previousNode = currentNode;
+                currentNode = currentNode.getNextNode();
+                return previousNode.getData();
             } else {
                 throw new NoSuchElementException("Illegal call of next(): " + "iterator is at end of list");
             }
         }
 
         public boolean hasNext() {
-            if (nextNode != null) {
+            if (currentNode != null) {
                 return true;
             }
             return false;
         }
 
         public void remove() {
-            Node prev = nextNode;
-            Node current = nextNode.getNextNode();
-
-            if (nextNode == null) {
-                throw new NoSuchElementException();
+            // if previousNode equals null then it is the first node, then remove this node. or goes to else and removes the last node
+            if (previousNode != null) {
+                LinkedList.this.remove(previousNode.getData());
             } else {
-                // set the prev node's next node to skip the coming one and move to next node
-                prev.setNextNode(current.getNextNode());
-//                LinkedList.this.remove(current);
-
+                LinkedList.this.remove();
             }
 
         }

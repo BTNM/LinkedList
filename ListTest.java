@@ -430,9 +430,10 @@ class ListTest {
 
         Iterator<Integer> itrList = mainList.iterator();
         Integer first = itrList.next();
+        Integer second = itrList.next();
         itrList.remove();
 
-        assertFalse(mainList.contains(first));
+        assertFalse(mainList.contains(second));
 
     }
 
@@ -525,10 +526,6 @@ class ListTest {
         // use filter to remove all even integers
         mainList.filter((tall) -> tall % 2 == 0);
 
-        for (int e : mainList) {
-            System.out.println(e);
-        }
-
         LinkedList<Integer> checkList = new LinkedList<>();
         checkList.add(1);
         checkList.add(3);
@@ -554,7 +551,19 @@ class ListTest {
         }
 
     }
+    @Test
+    void filterAllElements () {
+        mainList.add(2);
+        mainList.add(4);
+        mainList.add(6);
+        mainList.add(12);
 
+        // check what happens when list doesn't have elements that fit the filter criteria
+        mainList.filter((tall) -> tall % 2 != 0);
+
+        // check if possible to filter all elements in list away
+        mainList.filter(tall -> tall % 2 == 0);
+    }
     @Test
     void filterEmptyList () {
         // check if filter() can be used on an empty list, without crashing
@@ -579,7 +588,7 @@ class ListTest {
             assertEquals(Integer.valueOf(x), tempList.remove());
         }
 
-
+        // check another map function
         IList<Integer> tempList2 = mainList.map((i) -> i+3 );
 
         LinkedList<Integer> checkList2 = new LinkedList<>();
@@ -596,7 +605,7 @@ class ListTest {
 
     @Test
     void mapEmptyList () {
-
+        // map applied on empty list
         IList<Integer> tempList = mainList.map((i) -> i*2 );
 
         for (int e : tempList) {
@@ -739,24 +748,24 @@ class ListTest {
         assertEquals(result, "test");
     }
 
-    @Test
-    void ex1_FastSort() {
-        // Se ekstraoppgave 1
-        Random r = new Random();
-        IList<Integer> list = new LinkedList<>();
-        for (int n = 0; n < 1000000; n++) {
-            list.add(r.nextInt());
-        }
-
-        assertTimeout(Duration.ofSeconds(2), () -> list.sort(Integer::compare));
-
-        int n = list.remove();
-        for(int m = list.remove(); !list.isEmpty(); m = list.remove()) {
-            if (n > m) {
-                fail("List is not sorted");
-            }
-            n = m;
-        }
-    }
+//    @Test
+//    void ex1_FastSort() {
+//        // Se ekstraoppgave 1
+//        Random r = new Random();
+//        IList<Integer> list = new LinkedList<>();
+//        for (int n = 0; n < 1000000; n++) {
+//            list.add(r.nextInt());
+//        }
+//
+//        assertTimeout(Duration.ofSeconds(2), () -> list.sort(Integer::compare));
+//
+//        int n = list.remove();
+//        for(int m = list.remove(); !list.isEmpty(); m = list.remove()) {
+//            if (n > m) {
+//                fail("List is not sorted");
+//            }
+//            n = m;
+//        }
+//    }
 
 }
